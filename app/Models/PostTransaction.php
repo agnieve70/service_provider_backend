@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ServiceCategory extends Model
+class PostTransaction extends Model
 {
     use HasFactory;
-    protected $table = 'service_category';
+    protected $table = 'post_transaction';
 }
