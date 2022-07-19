@@ -3,32 +3,32 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Transaction;
+use App\Models\PostTransaction;
 use Illuminate\Http\Request;
 
-class TransactionController extends Controller
+class PostTransactionController extends Controller
 {
     function index(){
-        $comments = Transaction::get();
+        $comments = PostTransaction::get();
         return response()->json([
             "status" => 1,
             "message" => "Fetched Successfully",
             "data" => $comments,
         ], 200);
     }
-    function createTransaction(Request $request){
+    function createPostTransaction(Request $request){
         $request->validate([
-            'service_id' => 'required',
-            'client' => 'required',
+            'post_id' => 'required',
+            'service_provider' => 'required',
             'latitude' => 'required',  
-            'longtitude' => 'required',
-            'status' => 'required',
+            'longitude' => 'required',
+            'status' => 'required',  
         ]);
-        $user = new Transaction();
-        $user->service_id = $request->service_id;
-        $user->client = $request->client;
+        $user = new PostTransaction();
+        $user->post_id = $request->post_id;
+        $user->service_provider = $request->service_provider;
         $user->latitude = $request->latitude;
-        $user->longtitude = $request->longtitude;
+        $user->longitude = $request->longitude;
         $user->status = $request->status;
         $user->save();
         return response()->json([
@@ -36,5 +36,5 @@ class TransactionController extends Controller
             "message" => "Transaction Completed",
             "data"=>$user
         ], 200);
-}
+    }
 }

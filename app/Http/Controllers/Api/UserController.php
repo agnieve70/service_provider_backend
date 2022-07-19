@@ -9,6 +9,14 @@ use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
+    function index(){
+        $comments = User::get();
+        return response()->json([
+            "status" => 1,
+            "message" => "Fetched Successfully",
+            "data" => $comments,
+        ], 200);
+    }
     function register(Request $request){
         $request->validate([
             'name' => 'required',
@@ -22,7 +30,6 @@ class UserController extends Controller
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
         $user->contact = $request->contact;
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;
@@ -46,6 +53,32 @@ class UserController extends Controller
             "status" => 1,
             "message" => "User registered successfully",
             "user_id" => $user->id,
+            "token" => $token->plainTextToken,
+            "user" => $user
+        ], 200);
+    }
+    function login(Request $request){
+        $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+
+        if (!$token = auth()->attempt(["email" => $request->email, "password" => $request->password])) {
+            return response()->json([
+                "errors" => [
+                    "user" => 0
+                ],
+                "message" => "Invalid Credentials"
+            ], 404);
+        }
+
+        $token = $request->user()->createToken($request->email);
+
+        $user = User::where('email', $request->email)->first();
+
+        return response()->json([
+            "status" => 1,
+            "message" => "Login Successfully",
             "token" => $token->plainTextToken,
             "user" => $user
         ], 200);
