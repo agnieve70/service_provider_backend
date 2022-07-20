@@ -39,7 +39,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::post("service_category/create", [ ServiceCategoryController::class, "createServiceCategory"]);
     Route::get("service_categories", [ ServiceCategoryController::class, "index"]);
     Route::post("services/create", [ ServicesController::class, "createServices"]);
-    Route::post("my-services", [ ServicesController::class, "getMyService"]);
+    Route::get("my-services", [ ServicesController::class, "getMyService"]);
     Route::post("transaction/create", [ TransactionController::class, "createTransaction"]);
     Route::get("transaction/create", [ TransactionController::class, "createTransaction"]);
     Route::post("service-post/create", [ ServicePostController::class, "createServicePost"]);
