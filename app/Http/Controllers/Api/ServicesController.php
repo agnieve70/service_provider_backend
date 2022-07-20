@@ -17,6 +17,17 @@ class ServicesController extends Controller
             "data" => $comments,
         ], 200);
     }
+
+    function getMyService()
+    {
+        $services = Services::where('provider_id', auth()->user()->id)->get();
+        return response()->json([
+            "status" => 1,
+            "message" => "Fetched Successfully",
+            "data" => $services,
+        ], 200);
+    }
+
     function createServices(Request $request)
     {
         $request->validate([
