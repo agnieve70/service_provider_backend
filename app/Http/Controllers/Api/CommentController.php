@@ -9,10 +9,10 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     function index($id){
-        $comments = Comment::where('service_id', $id)
+        $comments = Comment::select('comment.id', 'comment', 'comment.created_at', 'name', 'firstname', 'lastname', 'contact')->where('service_id', $id)
         ->join('users', 'users.id', 'comment.user_id')
         ->get();
-        
+
         return response()->json([
             "status" => 1,
             "message" => "Fetched Successfully",
