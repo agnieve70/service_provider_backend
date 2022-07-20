@@ -21,7 +21,6 @@ class ServicesController extends Controller
     {
         $request->validate([
             'category_id' => 'required',
-            'provider_id' => 'required',
             'store' => 'required',
             'service' => 'required',
             'status' => 'required',
