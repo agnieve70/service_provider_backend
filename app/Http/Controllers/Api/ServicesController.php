@@ -10,11 +10,11 @@ class ServicesController extends Controller
 {
     function index()
     {
-        $comments = Services::get();
+        $services = Services::join('users', 'users.id', 'services.provider_id')->get();
         return response()->json([
             "status" => 1,
             "message" => "Fetched Successfully",
-            "data" => $comments,
+            "data" => $services,
         ], 200);
     }
 
