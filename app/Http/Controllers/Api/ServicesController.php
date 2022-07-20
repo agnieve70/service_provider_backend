@@ -100,4 +100,20 @@ class ServicesController extends Controller
         }
         
     }
+
+    function deleteService($id){
+        $service = Services::find($id);
+        
+        if($service){
+            return response()->json([
+                "status" => 1,
+                "message" => "Deleted Service",
+            ], 200);
+        }else{
+            return response()->json([
+                "status" => 0,
+                "message" => "Service not found",
+            ], 401);
+        }
+    }
 }
