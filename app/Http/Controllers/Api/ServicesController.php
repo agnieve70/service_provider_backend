@@ -32,7 +32,7 @@ class ServicesController extends Controller
         ]);
         $user = new Services();
         $user->category_id = $request->category_id;
-        $user->provider_id = $request->provider_id;
+        $user->provider_id = auth()->user()->id;
         $user->store = $request->store;
         $user->service = $request->service;
         $user->status = $request->status;
