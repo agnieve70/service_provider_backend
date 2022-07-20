@@ -18,6 +18,16 @@ class ServicesController extends Controller
         ], 200);
     }
 
+    function getService($id)
+    {
+        $service = Services::where('id', $id)->join('users', 'users.id', 'services.provider_id')->get();
+        return response()->json([
+            "status" => 1,
+            "message" => "Fetched Successfully",
+            "data" => $service,
+        ], 200);
+    }
+
     function getMyService()
     {
         $services = Services::where('provider_id', auth()->user()->id)->get();
