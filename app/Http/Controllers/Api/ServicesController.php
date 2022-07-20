@@ -20,7 +20,11 @@ class ServicesController extends Controller
 
     function getService($id)
     {
-        $service = Services::where('id', $id)->join('users', 'users.id', 'services.provider_id')->get();
+        $service = Services::where('services.id', $id)
+        ->select('services.id', 'category_id', 'store', 'service', 'status', 'price', 'description', 'ratings', 'image', 'services.created_at', 'name', 'email', 'firstname', 'lastname','role')
+        ->join('users', 'users.id', 'services.provider_id')
+        ->first();
+
         return response()->json([
             "status" => 1,
             "message" => "Fetched Successfully",
