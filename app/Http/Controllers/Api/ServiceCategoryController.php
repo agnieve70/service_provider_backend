@@ -18,7 +18,7 @@ class ServiceCategoryController extends Controller
     }
     function createServiceCategory(Request $request){
         $request->validate([
-            'category' => 'required',
+            'category' => 'required|unique:service_category',
         ]);
         $user = new ServiceCategory();
         $user->category = $request->category;
