@@ -22,7 +22,7 @@ class ServicesController extends Controller
         $request->validate([
             'category_id' => 'required',
             'store' => 'required',
-            'service' => 'required',
+            'service' => 'required|unique:services',
             'status' => 'required',
             'price' => 'required',
             'description' => 'required',
