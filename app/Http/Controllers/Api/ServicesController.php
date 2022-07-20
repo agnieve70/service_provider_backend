@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class ServicesController extends Controller
 {
-    function index(){
+    function index()
+    {
         $comments = Services::get();
         return response()->json([
             "status" => 1,
@@ -16,7 +17,8 @@ class ServicesController extends Controller
             "data" => $comments,
         ], 200);
     }
-    function createServices(Request $request){
+    function createServices(Request $request)
+    {
         $request->validate([
             'category_id' => 'required',
             'provider_id' => 'required',
@@ -37,12 +39,14 @@ class ServicesController extends Controller
         $user->price = $request->price;
         $user->description = $request->description;
         $user->ratings = $request->ratings;
-        $user->image = $request->image;
+
+        $image = $this->uploadPicture($request->file('image'), 'service_images/');
+        $user->image = $image;
         $user->save();
         return response()->json([
             "status" => 1,
             "message" => "Uploaded",
-            "data"=>$user
+            "data" => $user
         ], 200);
-}
+    }
 }

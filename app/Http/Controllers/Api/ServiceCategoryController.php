@@ -9,11 +9,11 @@ use Illuminate\Http\Request;
 class ServiceCategoryController extends Controller
 {
     function index(){
-        $comments = ServiceCategory::get();
+        $categories = ServiceCategory::get();
         return response()->json([
             "status" => 1,
             "message" => "Fetched Successfully",
-            "data" => $comments,
+            "data" => $categories,
         ], 200);
     }
     function createServiceCategory(Request $request){

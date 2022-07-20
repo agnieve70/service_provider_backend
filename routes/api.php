@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\PostTransactionController;
 use App\Http\Controllers\Api\ServiceCategoryController;
 use App\Http\Controllers\Api\ServicePostController;
 use App\Http\Controllers\Api\ServicesController;
+use App\Http\Controllers\Api\TotalController;
 use App\Http\Controllers\Api\TransactionController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -27,6 +28,7 @@ Route::post("register", [ UserController::class, "register"]);
 Route::post("login", [ UserController::class, "login"]);
 
 Route::group(["middleware" => ["auth:sanctum"]], function () {
+    Route::get("total-number", [ TotalController::class, "getTotalNumber"]);
     Route::get("comments", [ CommentController::class, "index"]);
     Route::post("comment/create", [ CommentController::class, "createComment"]);
     Route::get("comment/create", [ CommentController::class, "createComment"]);
@@ -35,7 +37,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::post("payment/create", [ PaymentController::class, "createPayment"]);
     Route::get("payment/create", [ PaymentController::class, "createPayment"]);
     Route::post("service_category/create", [ ServiceCategoryController::class, "createServiceCategory"]);
-    Route::get("service_category/create", [ ServiceCategoryController::class, "createServiceCategory"]);
+    Route::get("service_categories", [ ServiceCategoryController::class, "index"]);
     Route::post("services/create", [ ServicesController::class, "createServices"]);
     Route::post("transaction/create", [ TransactionController::class, "createTransaction"]);
     Route::get("transaction/create", [ TransactionController::class, "createTransaction"]);
