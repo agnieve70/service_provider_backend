@@ -29,7 +29,7 @@ Route::post("login", [ UserController::class, "login"]);
 
 Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::get("total-number", [ TotalController::class, "getTotalNumber"]);
-    Route::get("comments", [ CommentController::class, "index"]);
+    Route::get("comments/{id}", [ CommentController::class, "index"]);
     Route::post("comment/create", [ CommentController::class, "createComment"]);
     Route::get("comment/create", [ CommentController::class, "createComment"]);
     Route::post("message/create", [ MessageController::class, "createMessage"]);

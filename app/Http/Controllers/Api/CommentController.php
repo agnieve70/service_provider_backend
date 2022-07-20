@@ -8,8 +8,11 @@ use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
-    function index(){
-        $comments = Comment::get();
+    function index($id){
+        $comments = Comment::where('service_id', $id)
+        ->join('users', 'users.id', 'comment.user_id')
+        ->get();
+        
         return response()->json([
             "status" => 1,
             "message" => "Fetched Successfully",
