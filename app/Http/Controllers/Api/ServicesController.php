@@ -10,7 +10,7 @@ class ServicesController extends Controller
 {
     function index()
     {
-        $services = Services::join('users', 'users.id', 'services.provider_id')->get();
+        $services = Services::select('services.id', 'category_id', 'store', 'service', 'status', 'price', 'description', 'ratings', 'image', 'services.created_at', 'name', 'email', 'firstname', 'lastname','role')->join('users', 'users.id', 'services.provider_id')->get();
         return response()->json([
             "status" => 1,
             "message" => "Fetched Successfully",
