@@ -89,7 +89,7 @@ class ServicesController extends Controller
             $service->price = !empty($request->price) ? $request->price : $service->price;
             $service->description = !empty($request->description) ? $request->description : $service->description;
             
-            if($request->image === null || $request->image === ""){
+            if($request->image !== null || $request->image !== ""){
                 $image = $this->updateFile($service->image, $request->file('image'), 'service_images/');
                 $service->image = $image;
             }
