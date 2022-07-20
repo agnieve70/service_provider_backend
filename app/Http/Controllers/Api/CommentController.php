@@ -22,18 +22,17 @@ class CommentController extends Controller
     function createComment(Request $request){
         $request->validate([
             'service_id' => 'required',
-            'user_id' => 'required',
             'comment' => 'required',   
         ]);
-        $user = new Comment();
-        $user->service_id = $request->service_id;
-        $user->user_id = $request->user_id;
-        $user->comment = $request->comment;
-        $user->save();
+        $comment = new Comment();
+        $comment->service_id = $request->service_id;
+        $comment->user_id = auth()->user()->id;
+        $comment->comment = $request->comment;
+        $comment->save();
         return response()->json([
             "status" => 1,
             "message" => "Comment Posted",
-            "data"=>$user
+            "data"=>$comment
         ], 200);
     }
 }
