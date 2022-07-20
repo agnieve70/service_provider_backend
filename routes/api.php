@@ -31,11 +31,8 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::get("total-number", [ TotalController::class, "getTotalNumber"]);
     Route::get("comments/{id}", [ CommentController::class, "index"]);
     Route::post("comment/create", [ CommentController::class, "createComment"]);
-    Route::get("comment/create", [ CommentController::class, "createComment"]);
     Route::post("message/create", [ MessageController::class, "createMessage"]);
-    Route::get("message/create", [ MessageController::class, "createMessage"]);
     Route::post("payment/create", [ PaymentController::class, "createPayment"]);
-    Route::get("payment/create", [ PaymentController::class, "createPayment"]);
     Route::post("service_category/create", [ ServiceCategoryController::class, "createServiceCategory"]);
     Route::get("service_categories", [ ServiceCategoryController::class, "index"]);
     Route::get("services", [ ServicesController::class, "index"]);
@@ -45,13 +42,9 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::delete("services/delete/{id}", [ ServicesController::class, "deleteService"]);
     Route::get("my-services", [ ServicesController::class, "getMyService"]);
     Route::post("transaction/create", [ TransactionController::class, "createTransaction"]);
-    Route::get("transaction/create", [ TransactionController::class, "createTransaction"]);
     Route::post("service-post/create", [ ServicePostController::class, "createServicePost"]);
-    Route::get("service-post/create", [ ServicePostController::class, "createServicePost"]);
     Route::post("post-transaction/create", [ PostTransactionController::class, "createPostTransaction"]);
-    Route::get("post-transaction/create", [ PostTransactionController::class, "createPostTransaction"]);
     Route::post("post-comment/create", [ PostCommentController::class, "createPostComment"]);
-    Route::get("post-comment/create", [ PostCommentController::class, "createPostComment"]);
 });
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
