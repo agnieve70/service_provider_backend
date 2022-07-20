@@ -101,6 +101,7 @@ class ServicesController extends Controller
         $service = Services::find($id);
         
         if($service){
+            $service->delete();
             return response()->json([
                 "status" => 1,
                 "message" => "Deleted Service",
