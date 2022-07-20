@@ -59,4 +59,45 @@ class ServicesController extends Controller
             "data" => $user
         ], 200);
     }
+
+    function updateServices(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+        $service = Services::find($request->id);
+        
+        if($service){
+
+            $service->category_id = !empty($request->category_id) ?  $request->category_id : $service->category_id;
+            $service->store = !empty($request->store) ? $request->store : $service->store;
+            $service->service = !empty($request->service) ? $request->service : $service->service;
+            $service->status = !empty($request->status) ? $request->status: $service->status;
+            $service->price = !empty($request->price) ? $request->price : $service->price;
+            $service->description = !empty($request->description) ? $request->description : $service->description;
+            $service->ratings = !empty($request->ratings) ? $request->ratings: $service->ratings;
+            
+            if(!empty($request->image)){
+                $image = $this->updateFile($service->image, $request->file('image'), 'service_images/');
+                $service->image = $image;
+            }else{
+                $service->image = $service->image;
+            }
+            
+            $service->save();
+
+            return response()->json([
+                "status" => 1,
+                "message" => "Updated Service",
+                "data" => $service
+            ], 200);
+
+        }else{
+            return response()->json([
+                "status" => 0,
+                "message" => "Service not found",
+            ], 401);
+        }
+        
+    }
 }
