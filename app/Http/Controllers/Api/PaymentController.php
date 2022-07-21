@@ -2,12 +2,53 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\PaymentXendIt;
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
 {
+    function makeInvoice(Request $request){
+        $request->validate([
+            'service_id' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',  
+        ]);
+
+        $payment = new PaymentXendIt(auth()->user()->id,
+        $request->service_id,
+        $request->latitude,
+        $request->longitude);
+        $result = $payment->setPayment();
+        return response()->json([
+            "status" => 1,
+            "message" => "Invoice Successfully Created",
+            "data" => $result,
+        ], 200);
+    }
+
+    function makePayout(Request $request){
+        $request->validate([
+            'service_id' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',  
+        ]);
+
+        $payment = new PaymentXendIt(auth()->user()->id,
+        $request->service_id,
+        $request->latitude,
+        $request->longitude);
+
+        
+        $result = $payment->setPayout();
+        return response()->json([
+            "status" => 1,
+            "message" => "Invoice Successfully Created",
+            "data" => $result,
+        ], 200);
+    }
+
     function index(){
         $comments = Payment::get();
         return response()->json([
