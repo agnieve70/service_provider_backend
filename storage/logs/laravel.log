@@ -1110,3 +1110,5 @@
 #61 D:\\service_provider_backend\\server.php(21): require_once('D:\\\\service_prov...')
 #62 {main}
 "} 
+[2022-07-21 08:55:53] local.DEBUG: array (
+)  

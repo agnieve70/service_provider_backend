@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post("register", [ UserController::class, "register"]);
 Route::post("login", [ UserController::class, "login"]);
-Route::get("callback", [ TransactionController::class, "callback"]);
+Route::post("callback", [ TransactionController::class, "callback"]);
 
 Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::get("total-number", [ TotalController::class, "getTotalNumber"]);

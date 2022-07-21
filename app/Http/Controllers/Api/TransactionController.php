@@ -11,25 +11,25 @@ use Illuminate\Support\Facades\DB;
 class TransactionController extends Controller
 {
     function callback(Request $request){
-        $xendit = new XenditCallback();
-        $xendit->callback_id = $request->id;
-        $xendit->external_id = $request->external_id;
-        $xendit->user_id = $request->user_id;
-        $xendit->is_high = $request->is_high;
-        $xendit->payment_method = $request->payment_method;
-        $xendit->status = $request->status;
-        $xendit->merchant_name = $request->merchant_name;
-        $xendit->amount = $request->amount;
-        $xendit->paid_amount = $request->id;
-        $xendit->bank_code = $request->bank_code;
-        $xendit->paid_at = $request->paid_at;
-        $xendit->save();
+        // $xendit = new XenditCallback();
+        // $xendit->callback_id = $request->id;
+        // $xendit->external_id = $request->external_id;
+        // $xendit->user_id = $request->user_id;
+        // $xendit->is_high = $request->is_high;
+        // $xendit->payment_method = $request->payment_method;
+        // $xendit->status = $request->status;
+        // $xendit->merchant_name = $request->merchant_name;
+        // $xendit->amount = $request->amount;
+        // $xendit->paid_amount = $request->id;
+        // $xendit->bank_code = $request->bank_code;
+        // $xendit->paid_at = $request->paid_at;
+        // $xendit->save();
 
         logger($request->all());
         return response()->json([
             "status" => 1,
             "message" => "Fetched Successfully",
-            "data" => $xendit,
+            "data" => $request->all(),
         ], 200);
     }
 
