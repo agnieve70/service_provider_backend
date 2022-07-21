@@ -30,7 +30,9 @@ return [
 
     'compiled' => env(
         'VIEW_COMPILED_PATH',
-        realpath(storage_path('framework/views'))
+        isset($_SERVER['GAE_SERVICE']) ?
+            '/tmp'
+            : realpath(storage_path('framework/views'))
     ),
 
 ];

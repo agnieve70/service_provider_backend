@@ -4,23 +4,66 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
+use App\Models\XenditCallback;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TransactionController extends Controller
 {
-    function index(){
-        $comments = Transaction::get();
+    function callback(Request $request){
+        $xendit = new XenditCallback();
+        $xendit->callback_id = $request->id;
+        $xendit->external_id = $request->external_id;
+        $xendit->user_id = $request->user_id;
+        $xendit->is_high = $request->is_high;
+        $xendit->payment_method = $request->payment_method;
+        $xendit->status = $request->status;
+        $xendit->merchant_name = $request->merchant_name;
+        $xendit->amount = $request->amount;
+        $xendit->paid_amount = $request->id;
+        $xendit->bank_code = $request->bank_code;
+        $xendit->paid_at = $request->paid_at;
+        $xendit->save();
+
+        logger($request->all());
+    }
+
+    function index()
+    {
+        $transactions = Transaction::select(
+            'transaction.id',
+            'latitude',
+            'longtitude',
+            'service',
+            'price',
+            'transaction.status',
+            'transaction.created_at'
+        )
+            ->join('users', 'users.id', 'transaction.client')
+            ->join(
+                'services',
+                'services.id',
+                'transaction.service_id'
+            )
+            ->whereIn('service_id', 
+            function($query) {
+                $query->select('id')->from('services')
+                ->where('provider_id', auth()->user()->id);
+            })
+            ->get();
         return response()->json([
             "status" => 1,
             "message" => "Fetched Successfully",
-            "data" => $comments,
+            "data" => $transactions,
         ], 200);
     }
-    function createTransaction(Request $request){
+
+    function createTransaction(Request $request)
+    {
         $request->validate([
             'service_id' => 'required',
             'client' => 'required',
-            'latitude' => 'required',  
+            'latitude' => 'required',
             'longtitude' => 'required',
             'status' => 'required',
         ]);
@@ -34,7 +77,7 @@ class TransactionController extends Controller
         return response()->json([
             "status" => 1,
             "message" => "Transaction Completed",
-            "data"=>$user
+            "data" => $user
         ], 200);
-}
+    }
 }

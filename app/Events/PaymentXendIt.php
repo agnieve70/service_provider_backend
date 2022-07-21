@@ -121,8 +121,8 @@ class PaymentXendIt
                     'viber'
                 ]
             ],
-            'success_redirect_url' => 'http://localhost:8000/success',
-            'failure_redirect_url' => 'http://localhost:8000/fail',
+            'success_redirect_url' => 'https://service-provider-pi.vercel.app/success-page/'.$str_rnd,
+            'failure_redirect_url' => 'https://service-provider-pi.vercel.app/fail-page/'.$str_rnd,
             'currency' => 'PHP',
             'items' => [
                 [

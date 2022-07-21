@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Events\PaymentXendIt;
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 
 class PaymentController extends Controller
@@ -57,6 +58,31 @@ class PaymentController extends Controller
             "data" => $comments,
         ], 200);
     }
+
+    function updatePayment(Request $request){
+        $request->validate([
+            'code' => 'required',
+        ]);
+
+        $payment = Transaction::where('transaction_no', $request->code)->first();
+        if($payment){
+            $payment->transaction_no = '';
+            $payment->status = 'Success';
+            $payment->save();
+            return response()->json([
+                "status" => 1,
+                "message" => "Transaction Completed",
+                "data"=>$payment
+            ], 200);
+        }else{
+            return response()->json([
+                "status" => 0,
+                "message" => "Transaction code not found",
+            ], 401);
+        }
+        
+    }
+
     function createPayment(Request $request){
         $request->validate([
             'invoice_id' => 'required',
@@ -64,16 +90,16 @@ class PaymentController extends Controller
             'client_id' => 'required',  
             'rating' => 'required',  
         ]);
-        $user = new Payment();
-        $user->invoice_id = $request->invoice_id;
-        $user->amount = $request->amount;
-        $user->client_id = $request->client_id;
-        $user->rating = $request->rating;
-        $user->save();
+        $payment = new Payment();
+        $payment->invoice_id = $request->invoice_id;
+        $payment->amount = $request->amount;
+        $payment->client_id = $request->client_id;
+        $payment->rating = $request->rating;
+        $payment->save();
         return response()->json([
             "status" => 1,
             "message" => "Transaction Completed",
-            "data"=>$user
+            "data"=>$payment
         ], 200);
-}
+    }
 }

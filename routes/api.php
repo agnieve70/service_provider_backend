@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post("register", [ UserController::class, "register"]);
 Route::post("login", [ UserController::class, "login"]);
+Route::get("callback", [ TransactionController::class, "callback"]);
 
 Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::get("total-number", [ TotalController::class, "getTotalNumber"]);
@@ -33,6 +34,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::post("comment/create", [ CommentController::class, "createComment"]);
     Route::post("message/create", [ MessageController::class, "createMessage"]);
     Route::post("payment/create", [ PaymentController::class, "createPayment"]);
+    Route::post("payment/update", [ PaymentController::class, "updatePayment"]);
     Route::post("service_category/create", [ ServiceCategoryController::class, "createServiceCategory"]);
     Route::get("service_categories", [ ServiceCategoryController::class, "index"]);
     Route::get("services", [ ServicesController::class, "index"]);
@@ -43,6 +45,7 @@ Route::group(["middleware" => ["auth:sanctum"]], function () {
     Route::get("my-services", [ ServicesController::class, "getMyService"]);
     Route::post("invoice/create", [ PaymentController::class, "makeInvoice"]);
     Route::post("payout/create", [ PaymentController::class, "makePayout"]);
+    Route::get("transactions", [ TransactionController::class, "index"]);
     Route::post("transaction/create", [ TransactionController::class, "createTransaction"]);
     Route::post("service-post/create", [ ServicePostController::class, "createServicePost"]);
     Route::post("post-transaction/create", [ PostTransactionController::class, "createPostTransaction"]);
