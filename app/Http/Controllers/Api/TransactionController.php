@@ -21,7 +21,7 @@ class TransactionController extends Controller
         $xendit->merchant_name = $request->merchant_name;
         $xendit->amount = $request->amount;
         $xendit->paid_amount = $request->id;
-        $xendit->bank_code = $request->bank_code;
+        $xendit->bank_code = $request->payment_channel;
         $xendit->paid_at = $request->paid_at;
         $xendit->save();
 
