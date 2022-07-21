@@ -64,9 +64,10 @@ class PaymentController extends Controller
             'code' => 'required',
         ]);
 
-        $payment = Transaction::where('transaction_no', $request->code)->first();
+        $payment = Transaction::where('transaction_no', $request->code)
+        ->where('status','!=' ,'Success')
+        ->first();
         if($payment){
-            $payment->transaction_no = '';
             $payment->status = 'Success';
             $payment->save();
             return response()->json([

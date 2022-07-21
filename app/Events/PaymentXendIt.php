@@ -83,11 +83,12 @@ class PaymentXendIt
         $transaction->status = 'Pending';
         $transaction->save();
 
+        logger($transaction);
 
         $params = [
-            'external_id' => $transaction->id,
+            'external_id' => $str_rnd,
             'amount' => $service_info->price,
-            'description' => 'Service Finder',
+            'description' => $service_info->service,
             'invoice_duration' => 86400,
             'customer' => [
                 'given_names' => $user_info->firstname,
