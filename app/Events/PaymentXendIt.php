@@ -85,8 +85,8 @@ class PaymentXendIt
 
 
         $params = [
-            'external_id' => $str_rnd,
-            'amount' => 495,
+            'external_id' => $transaction->id,
+            'amount' => $service_info->price,
             'description' => 'Service Finder',
             'invoice_duration' => 86400,
             'customer' => [
