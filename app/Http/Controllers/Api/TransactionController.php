@@ -26,6 +26,11 @@ class TransactionController extends Controller
         $xendit->save();
 
         logger($request->all());
+        return response()->json([
+            "status" => 1,
+            "message" => "Fetched Successfully",
+            "data" => $xendit,
+        ], 200);
     }
 
     function index()
