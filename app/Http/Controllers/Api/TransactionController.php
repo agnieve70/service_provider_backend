@@ -97,6 +97,35 @@ class TransactionController extends Controller
         ], 200);
     }
     
+    function detail($id){
+        $transaction = Transaction::select(
+            'transaction.id',
+            'latitude',
+            'longtitude',
+            'service',
+            'price',
+            'transaction.status',
+            'transaction.created_at'
+        )
+            ->join('users', 'users.id', 'transaction.client')
+            ->join(
+                'services',
+                'services.id',
+                'transaction.service_id'
+            )
+            ->whereIn('service_id', 
+            function($query) {
+                $query->select('id')->from('services')
+                ->where('provider_id', auth()->user()->id);
+            })
+            ->where('id', $id)
+            ->get();
+        return response()->json([
+            "status" => 1,
+            "message" => "Fetched Successfully",
+            "data" => $transaction,
+        ], 200);
+    }
 
     function createTransaction(Request $request)
     {
