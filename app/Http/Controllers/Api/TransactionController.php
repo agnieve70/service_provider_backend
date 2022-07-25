@@ -37,6 +37,8 @@ class TransactionController extends Controller
     {
         $transactions = Transaction::select(
             'transaction.id',
+            'service_id',
+            'provider_id',
             'latitude',
             'longtitude',
             'service',
@@ -55,6 +57,38 @@ class TransactionController extends Controller
                 $query->select('id')->from('services')
                 ->where('provider_id', auth()->user()->id);
             })
+            ->where('client', auth()->user()->id)
+            ->get();
+
+        return response()->json([
+            "status" => 1,
+            "message" => "Fetched Successfully",
+            "data" => $transactions,
+        ], 200);
+    }
+
+    function sp(){
+        $transactions = Transaction::select(
+            'transaction.id',
+            'latitude',
+            'longtitude',
+            'service',
+            'price',
+            'transaction.status',
+            'transaction.created_at'
+        )
+            ->join('users', 'users.id', 'transaction.client')
+            ->join(
+                'services',
+                'services.id',
+                'transaction.service_id'
+            )
+            ->whereIn('service_id', 
+            function($query) {
+                $query->select('id')->from('services')
+                ->where('provider_id', auth()->user()->id);
+            })
+            ->where('provider_id', auth()->user()->id)
             ->get();
         return response()->json([
             "status" => 1,
@@ -62,6 +96,7 @@ class TransactionController extends Controller
             "data" => $transactions,
         ], 200);
     }
+    
 
     function createTransaction(Request $request)
     {

@@ -18,6 +18,18 @@ class ServicesController extends Controller
         ], 200);
     }
 
+    function search(Request $request){
+        $services = Services::where($request->field,'LIKE',"%{$request->search}%")->get();
+
+        return response()->json([
+            "status" => 1,
+            "message" => "Fetched Successfully",
+            "data" => $services,
+            "field" => $request->field,
+            "search" => $request->search,
+        ], 200);
+    }
+
     function getService($id)
     {
         $service = Services::where('services.id', $id)
